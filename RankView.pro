@@ -16,11 +16,16 @@ SOURCES += main.cpp\
         colinegraphicsitem.cpp \
     graphics.cpp \
     rankviewdialog.cpp
+    nodedata.cpp \
+    plotwizard.cpp
 
 HEADERS  += mainwindow.h \
          conodegraphicsitem.h \
          colinegraphicsitem.h \
     graphics.h \
     rankviewdialog.h
+    nodedata.h \
+    plotwizard.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    plotwizard.ui
