@@ -14,11 +14,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
         conodegraphicsitem.cpp \
         colinegraphicsitem.cpp \
-    graphics.cpp
+    graphics.cpp \
+    rankviewdialog.cpp
 
 HEADERS  += mainwindow.h \
          conodegraphicsitem.h \
          colinegraphicsitem.h \
-    graphics.h
+    graphics.h \
+    rankviewdialog.h
 
 FORMS    += mainwindow.ui
