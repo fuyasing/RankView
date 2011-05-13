@@ -14,11 +14,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
         conodegraphicsitem.cpp \
         colinegraphicsitem.cpp \
-    graphics.cpp
+    graphics.cpp \
+    nodedata.cpp \
+    plotwizard.cpp
 
 HEADERS  += mainwindow.h \
          conodegraphicsitem.h \
          colinegraphicsitem.h \
-    graphics.h
+    graphics.h \
+    nodedata.h \
+    plotwizard.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    plotwizard.ui
