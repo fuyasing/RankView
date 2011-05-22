@@ -1,5 +1,6 @@
 #include "conodegraphicsitem.h"
 #include "colinegraphicsitem.h"
+#include "graphics.h"
 
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -8,16 +9,30 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsWidget>
 
-CoNodeGraphicsItem::CoNodeGraphicsItem(const QColor color, const int x, const int y, QHash<QString,int> ranks)
+CoNodeGraphicsItem::CoNodeGraphicsItem()
+{
+    this->m_dataX = 0;
+    this->m_dataY = 0;
+    this->m_color = QColor(Qt::black);
+    this->m_examName = "";
+    this->m_ranks = QHash<QString, int>();
+    this->m_lineList = QList<CoLineGraphicsItem *>();
+}
+
+CoNodeGraphicsItem::CoNodeGraphicsItem(const QColor color, const QString examName, const int x, const int y, QHash<QString, int> ranks)
 {
     this->m_dataX = x;
-    this->m_dataY = y;
-    this->setPos(x, y);
+    this->m_dataY = y * 10 + 50;
+    this->m_tRank = y;
+    this->setPos(m_dataX, m_dataY);
     this->m_color = color;
+    this->m_examName = examName;
+    this->m_ranks = ranks;
     this->setFlags(ItemIsSelectable);
     this->setAcceptHoverEvents(true);
-    this->formToolTip(ranks);
+    this->setAcceptedMouseButtons(0);
 }
 
 void CoNodeGraphicsItem::addLine(CoLineGraphicsItem *line)
@@ -49,42 +64,45 @@ void CoNodeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     QPainterPath path = shape();
     painter->drawPath(path);
 
+    QRectF rankRect(0, -20, 20, 20);
+    QRectF textRect(0, 550-m_dataY, 200, 100);
+    QFont font = painter->font();
+    font.setBold(0);
+    font.setPointSize(14);
+    painter->setFont(font);
+    painter->setPen(Qt::black);
+    painter->drawText(rankRect, QString(tr("%1")).arg(m_tRank));
+    painter->drawText(textRect, m_examName);
+
+    QLineF line(boundingRect().width()/2, boundingRect().height()/2, boundingRect().width()/2, 550 - m_dataY);
+   // QLineF line(m_sourcePoint,m_destPoint);
+    if (qFuzzyCompare(line.length(), qreal(0.)))
+        return;
+
+    painter->setPen(QPen(Qt::gray,1,Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+    painter->drawLine(line);
+
     painter->save();
     painter->scale(scaleFactor,scaleFactor);
     painter->restore();
 }
 
-void CoNodeGraphicsItem::formToolTip(QHash<QString,int> ranks)
+
+const QHash<QString, int> CoNodeGraphicsItem::getRanks() const
 {
-    QList<QString> kemu = ranks.keys();
-    QStringList result;
-    foreach(QString ke, kemu)
-    {
-        if(ranks.value(ke)>0)
-            result << ke << QObject::tr("课较上次排名进步;");
-        if(ranks.value(ke)<0)
-            result << ke << QObject::tr("课较上次排名下降;");
-        if(ranks.value(ke)==0)
-            result << ke << QObject::tr("课与上次排名相同;");
-    }
-    QString res = result.join("\n");
-    this->setToolTip(res);
+    return m_ranks;
 }
 
-void CoNodeGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void CoNodeGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    QGraphicsItem::mousePressEvent(event);
-    update();
+    emit nodeMouseEnter(m_dataX, m_dataY, m_ranks);
+ //   QGraphicsItem::hoverEnterEvent(event);
+//    update();
 }
 
-void CoNodeGraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void CoNodeGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    QGraphicsItem::mouseMoveEvent(event);
-    update();
-}
-
-void CoNodeGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    QGraphicsItem::mouseReleaseEvent(event);
-    update();
+    emit nodeMouseLeave();
+//    QGraphicsItem::hoverLeaveEvent(event);
+//    update();
 }

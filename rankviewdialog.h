@@ -2,14 +2,16 @@
 #define RANKVIEWDIALOG_H
 
 #include <QDialog>
+#include <QList>
 
 class QDialogButtonBox;
+class NodeData;
 
 class RankViewDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit RankViewDialog(QWidget *parent = 0);
+    explicit RankViewDialog(QString stdName, QList<NodeData*> nodeList,QWidget *parent = 0);
 
 signals:
 

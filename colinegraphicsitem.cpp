@@ -7,6 +7,7 @@
 CoLineGraphicsItem::CoLineGraphicsItem(CoNodeGraphicsItem *sourceNode, CoNodeGraphicsItem *destNode)
 {
     this->setAcceptedMouseButtons(0);
+    this->setAcceptHoverEvents(0);
     m_source = sourceNode;
     m_dest = destNode;
     m_sourcePoint = m_source->pos();
@@ -36,11 +37,26 @@ void CoLineGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 {
     if(!m_source || !m_dest)
         return;
+
     QLineF line(m_sourcePoint.x()+m_source->boundingRect().width()/2,m_sourcePoint.y()+m_source->boundingRect().height()/2,m_destPoint.x()+m_dest->boundingRect().width()/2, m_destPoint.y()+m_dest->boundingRect().height()/2);
    // QLineF line(m_sourcePoint,m_destPoint);
+    if (qFuzzyCompare(line.length(), qreal(0.)))
+        return;
+
     painter->setPen(QPen(Qt::black,1,Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter->drawLine(line);
     painter->save();
     painter->scale(scaleFactor, scaleFactor);
     painter->restore();
 }
+/*void CoLineGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    QGraphicsItem::hoverEnterEvent(event);
+    //update();
+}
+
+void CoLineGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    QGraphicsItem::hoverLeaveEvent(event);
+    //update();
+}*/

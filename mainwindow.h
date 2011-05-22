@@ -2,10 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QList>
 
 namespace Ui {
     class MainWindow;
 }
+
+class NodeData;
 
 class MainWindow : public QMainWindow
 {
@@ -20,6 +23,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QList<NodeData*> nodeList, nullList;
 };
 
 #endif // MAINWINDOW_H

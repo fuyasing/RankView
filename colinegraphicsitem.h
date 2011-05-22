@@ -20,6 +20,8 @@ public:
 protected:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    //void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    //void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 private:
     CoNodeGraphicsItem *m_source, *m_dest;

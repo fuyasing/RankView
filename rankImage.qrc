@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/downRank.png</file>
+        <file>images/sameRank.png</file>
+        <file>images/upRank.png</file>
+    </qresource>
+</RCC>
