@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PlotWizard</class>
  <widget class="QWizard" name="PlotWizard">
@@ -15,4 +16,6 @@
   <widget class="QWizardPage" name="wizardPage1"/>
   <widget class="QWizardPage" name="wizardPage2"/>
  </widget>
+ <resources/>
+ <connections/>
 </ui>
