@@ -14,16 +14,23 @@ SOURCES += main.cpp\
         mainwindow.cpp \
         conodegraphicsitem.cpp \
         colinegraphicsitem.cpp \
-    graphics.cpp \
-    nodedata.cpp \
-    plotwizard.cpp
+        graphics.cpp \
+        rankviewdialog.cpp\
+        nodedata.cpp \
+        plotwizard.cpp \
+    tipgraphicsitem.cpp
 
 HEADERS  += mainwindow.h \
          conodegraphicsitem.h \
          colinegraphicsitem.h \
-    graphics.h \
-    nodedata.h \
-    plotwizard.h
+        graphics.h \
+        rankviewdialog.h\
+        nodedata.h \
+        plotwizard.h \
+    tipgraphicsitem.h
 
 FORMS    += mainwindow.ui \
-    plotwizard.ui
+        plotwizard.ui
+
+RESOURCES += \
+    rankImage.qrc

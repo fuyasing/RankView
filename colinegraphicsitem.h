@@ -20,9 +20,11 @@ public:
 protected:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    //void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    //void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 private:
-    Node *pm_source, *pm_dest;
+    CoNodeGraphicsItem *m_source, *m_dest;
 
     QPointF m_sourcePoint, m_destPoint;
 };
