@@ -1,14 +1,10 @@
 #include "plotwizard.h"
-#include "ui_plotwizard.h"
 
 PlotWizard::PlotWizard(QWidget *parent) :
-    QWizard(parent),
-    ui(new Ui::PlotWizard)
+    QDialog(parent)
 {
-    ui->setupUi(this);
 }
 
 PlotWizard::~PlotWizard()
 {
-    delete ui;
 }

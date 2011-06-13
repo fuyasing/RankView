@@ -1,13 +1,9 @@
 #ifndef PLOTWIZARD_H
 #define PLOTWIZARD_H
 
-#include <QWizard>
+#include <QDialog>
 
-namespace Ui {
-    class PlotWizard;
-}
-
-class PlotWizard : public QWizard
+class PlotWizard : public QDialog
 {
     Q_OBJECT
 
@@ -16,7 +12,6 @@ public:
     ~PlotWizard();
 
 private:
-    Ui::PlotWizard *ui;
 };
 
 #endif // PLOTWIZARD_H
