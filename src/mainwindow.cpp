@@ -73,7 +73,7 @@ void MainWindow::importData()
 
 	QFileInfo tmp(dataFileName);
 	QString exam_name = tmp.baseName();
-	exam->setFilter(QString("name = %1").arg(exam_name));
+	exam->setFilter(QString("name = \'%1\'").arg(exam_name));
 	if(exam->rowCount() == 1)
 	{
 		QSqlRecord rq = exam->record(0);
@@ -84,7 +84,7 @@ void MainWindow::importData()
 		exam->insertRow(0);
 		exam->setData(exam->index(0,Global::Exam_Name),exam_name);
 		exam->submitAll();
-		exam->setFilter(QString("name = %1").arg(exam_name));
+		exam->setFilter(QString("name = \'%1\'").arg(exam_name));
 		QSqlRecord rq = exam->record(0);
 		exam_id = rq.value("id").toInt();
 	}
@@ -105,6 +105,8 @@ void MainWindow::importData()
 	{
 		record = in.readLine();
 		cols = record.split(";");
+		if(cols.size()!=11)
+			continue;
 		if(!studentMap.contains(cols[Global::Data_StudentNum]))
 		{
 			student->insertRow(0);
@@ -131,7 +133,6 @@ void MainWindow::importData()
 	}
 	student->setFilter("id > -1");
 	exam->setFilter("id > -1");
-	score->setFilter("id > -1");
 	m_scoreView->setCurrentStudent();
 }
 
@@ -162,8 +163,8 @@ void MainWindow::about()
 				"<p>Copyright &copy; 2011 Free Storm ORG</p>"
 				"<p>RankView is a small software written for Michael Ding's dear teacher</p>"
 				"<p>Authors:</p>"
-				"<p>Michael Ding <dingyan@freestorm.org></p>"
-				"<p>Stella Fu <fuyaxing@freestorm.org></p>"
+				"<p>Michael Ding &lt;dingyan@freestorm.org&gt;</p>"
+				"<p>Stella Fu &lt;fuyaxing@freestorm.org&gt;</p>"
 			  ));
 }
 
@@ -363,7 +364,6 @@ void MainWindow::createTable()
 			QSqlRelation("exam","id","name"));
 	scoreModel->setSort(Global::Score_ExamId, Qt::AscendingOrder);
 	scoreModel->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
-	scoreModel->setHeaderData(Global::Score_ExamId, Qt::Horizontal, tr("Examination Name"));
 	scoreModel->setHeaderData(Global::Score_Chinese, Qt::Horizontal, tr("Chinese"));
 	scoreModel->setHeaderData(Global::Score_Maths, Qt::Horizontal, tr("Maths"));
 	scoreModel->setHeaderData(Global::Score_ForeignLanguage, Qt::Horizontal, tr("Foreign Language"));
@@ -413,7 +413,6 @@ void MainWindow::openTable()
 			QSqlRelation("exam","id","name"));
 	scoreModel->setSort(Global::Score_ExamId, Qt::AscendingOrder);
 	scoreModel->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
-	scoreModel->setHeaderData(Global::Score_ExamId, Qt::Horizontal, tr("Examination Name"));
 	scoreModel->setHeaderData(Global::Score_Chinese, Qt::Horizontal, tr("Chinese"));
 	scoreModel->setHeaderData(Global::Score_Maths, Qt::Horizontal, tr("Maths"));
 	scoreModel->setHeaderData(Global::Score_ForeignLanguage, Qt::Horizontal, tr("Foreign Language"));

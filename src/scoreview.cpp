@@ -55,7 +55,7 @@ void ScoreView::updateScoreListView()
 	QModelIndex index = m_studentListView->currentIndex();
 	if(index.isValid())
 	{
-		QSqlRecord record = scoreListModel()->record(index.row());
+		QSqlRecord record = studentListModel()->record(index.row());
 		scoreListModel()->setFilter(QString("StudentId = %1").arg(record.value("id").toInt()));
 	}
 	else
@@ -101,6 +101,7 @@ void ScoreView::createScoreListView(QSqlRelationalTableModel* score_list)
 	m_scoreListView->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked);
 	m_scoreListView->setColumnHidden(Global::Score_Id, true);
 	m_scoreListView->setColumnHidden(Global::Score_StudentId, true);
+	m_scoreListView->setColumnHidden(Global::Score_ExamId, true);
 	m_scoreListView->horizontalHeader()->setStretchLastSection(true);
 	m_scoreListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_mainLayout->addWidget(m_scoreListView);
@@ -109,4 +110,5 @@ void ScoreView::createScoreListView(QSqlRelationalTableModel* score_list)
 void ScoreView::setCurrentStudent(int row)
 {
 	m_studentListView->setCurrentIndex(studentListModel()->index(row,0));
+	updateScoreListView();
 }
