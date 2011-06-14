@@ -56,11 +56,11 @@ void ScoreView::updateScoreListView()
 	if(index.isValid())
 	{
 		QSqlRecord record = studentListModel()->record(index.row());
-		scoreListModel()->setFilter(QString("StudentId = %1").arg(record.value("id").toInt()));
+		scoreListModel()->setFilter(QString("studentid = %1").arg(record.value("id").toInt()));
 	}
 	else
 	{
-		scoreListModel()->setFilter("StudentId = -1");
+		scoreListModel()->setFilter("studentid = -1");
 	}
 	m_scoreListView->horizontalHeader()->setVisible(m_scoreListView->model()->rowCount() > 0);
 }
@@ -96,13 +96,13 @@ void ScoreView::createScoreListView(QSqlRelationalTableModel* score_list)
 {
 	m_scoreListView = new QTableView;
 	m_scoreListView->setModel(score_list);
-	m_scoreListView->setSelectionMode(QAbstractItemView::SingleSelection);
+	m_scoreListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 	m_scoreListView->setSelectionBehavior(QAbstractItemView::SelectItems);
 	m_scoreListView->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked);
 	m_scoreListView->setColumnHidden(Global::Score_Id, true);
 	m_scoreListView->setColumnHidden(Global::Score_StudentId, true);
 	m_scoreListView->setColumnHidden(Global::Score_ExamId, true);
-	m_scoreListView->horizontalHeader()->setStretchLastSection(true);
+	m_scoreListView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
 	m_scoreListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_mainLayout->addWidget(m_scoreListView);
 }

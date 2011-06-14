@@ -12,6 +12,7 @@ class QMenu;
 class QToolBar;
 
 class ScoreView;
+class NodeData;
 
 class MainWindow : public QMainWindow
 {
@@ -75,6 +76,7 @@ private:
 	void createTable();
 	void openTable();
 	void updateRecentDBActions();
+	QList<NodeData*> computeNodeList(int student_id, int start_exam, int end_exam, QList<int> majors);
 	QString strippedName(const QString &fullFileName);
 
 };

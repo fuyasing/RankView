@@ -380,6 +380,7 @@ void MainWindow::createTable()
 	}
 
 	QSqlTableModel* studentModel = scoreModel->relationModel(Global::Score_StudentId);
+	studentModel->setSort(Global::Student_Id, Qt::AscendingOrder);
 	studentModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
 	studentModel->setHeaderData(Global::Student_Num, Qt::Horizontal, tr("Student No."));
 	studentModel->setHeaderData(Global::Student_Name, Qt::Horizontal, tr("Name"));
@@ -390,6 +391,7 @@ void MainWindow::createTable()
 	}
 
 	QSqlTableModel* examModel = scoreModel->relationModel(Global::Score_ExamId);
+	examModel->setSort(Global::Exam_Id, Qt::AscendingOrder);
 	examModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
 	examModel->setHeaderData(Global::Exam_Name, Qt::Horizontal, tr("Examination Name"));
 	if(!examModel->select())
@@ -429,6 +431,7 @@ void MainWindow::openTable()
 	}
 
 	QSqlTableModel* studentModel = scoreModel->relationModel(Global::Score_StudentId);
+	studentModel->setSort(Global::Student_Id, Qt::AscendingOrder);
 	studentModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
 	studentModel->setHeaderData(Global::Student_Num, Qt::Horizontal, tr("Student No."));
 	studentModel->setHeaderData(Global::Student_Name, Qt::Horizontal, tr("Name"));
@@ -439,6 +442,7 @@ void MainWindow::openTable()
 	}
 
 	QSqlTableModel* examModel = scoreModel->relationModel(Global::Score_ExamId);
+	examModel->setSort(Global::Exam_Id, Qt::AscendingOrder);
 	examModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
 	examModel->setHeaderData(Global::Exam_Name, Qt::Horizontal, tr("Examination Name"));
 	if(!examModel->select())
@@ -480,4 +484,15 @@ void MainWindow::updateRecentDBActions()
 QString MainWindow::strippedName(const QString &fullFileName)
 {
 	return QFileInfo(fullFileName).fileName();
+}
+
+QList<NodeData*> MainWindow::computeNodeList(int student_id, int start_exam, int end_exam, QList<int> majors)
+{
+	QList<NodeData*> node_list;
+	QSqlRelationalTableModel* score = m_scoreView->scoreListModel();
+	score->setFilter(QString("examid BETWEEN %1 AND %2").arg(start_exam).arg(end_exam));
+	//TODO
+
+	m_scoreView->setCurrentStudent();
+	return node_list;
 }
