@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "scoreview.h"
 #include "plotwizard.h"
+#include "nodedata.h"
+#include "rankviewdialog.h"
 
 #include <QApplication>
 #include <QAction>
@@ -11,16 +13,27 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
-#include <QHash>
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSettings>
+#include <QtAlgorithms>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
 {
+	m_subjectMap.insert(Global::Score_Chinese,QObject::tr("Chinese"));
+	m_subjectMap.insert(Global::Score_Maths,QObject::tr("Maths"));
+	m_subjectMap.insert(Global::Score_ForeignLanguage,QObject::tr("Foreign Language"));
+	m_subjectMap.insert(Global::Score_Physics,QObject::tr("Physics"));
+	m_subjectMap.insert(Global::Score_Chemistry,QObject::tr("Chemistry"));
+	m_subjectMap.insert(Global::Score_Biology,QObject::tr("Biology"));
+	m_subjectMap.insert(Global::Score_Politics,QObject::tr("Politics"));
+	m_subjectMap.insert(Global::Score_History,QObject::tr("History"));
+	m_subjectMap.insert(Global::Score_Geography,QObject::tr("Geography"));
+
 	QWidget* blankWidget = new QWidget;
+	blankWidget->setMinimumSize(1000,600);
 	setCentralWidget(blankWidget);
 
 	createActions();
@@ -154,6 +167,18 @@ void MainWindow::revertChanges()
 
 void MainWindow::plotRank()
 {
+	QSqlTableModel* student_list = m_scoreView->studentListModel();
+	QSqlTableModel* exam_list = m_scoreView->examListModel();
+	PlotWizard* plotDlg = new PlotWizard(student_list, exam_list, this);
+	if(plotDlg->exec())
+	{
+		QList<NodeData*> node_list = computeNodeList(plotDlg->selectedStudent(),plotDlg->startExam(),plotDlg->endExam(),plotDlg->selectedSubjects());
+		RankViewDialog* rankview = new RankViewDialog(plotDlg->selectedStudentName(),node_list);
+		rankview->exec();
+		delete rankview;
+
+	}
+	delete plotDlg;
 }
 
 void MainWindow::about()
@@ -311,7 +336,7 @@ bool MainWindow::setCurrentDB(const QString &dbName)
 	plotAction->setEnabled(true);
 	applyAction->setEnabled(true);
 	revertAction->setEnabled(true);
-	setWindowTitle(tr("%1 - %2").arg(m_curDB).arg(tr("RankView")));
+	setWindowTitle(QString("%1 - %2").arg(m_curDB).arg(tr("RankView")));
 	return true;
 }
 
@@ -359,20 +384,20 @@ void MainWindow::createTable()
 	QSqlRelationalTableModel* scoreModel = new QSqlRelationalTableModel;
 	scoreModel->setTable("score");
 	scoreModel->setRelation(Global::Score_StudentId, 
-			QSqlRelation("student","id","name"));
+			QSqlRelation("student","id","id"));
 	scoreModel->setRelation(Global::Score_ExamId,
-			QSqlRelation("exam","id","name"));
+			QSqlRelation("exam","id","id"));
 	scoreModel->setSort(Global::Score_ExamId, Qt::AscendingOrder);
 	scoreModel->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
-	scoreModel->setHeaderData(Global::Score_Chinese, Qt::Horizontal, tr("Chinese"));
-	scoreModel->setHeaderData(Global::Score_Maths, Qt::Horizontal, tr("Maths"));
-	scoreModel->setHeaderData(Global::Score_ForeignLanguage, Qt::Horizontal, tr("Foreign Language"));
-	scoreModel->setHeaderData(Global::Score_Physics, Qt::Horizontal, tr("Physics"));
-	scoreModel->setHeaderData(Global::Score_Chemistry, Qt::Horizontal, tr("Chemistry"));
-	scoreModel->setHeaderData(Global::Score_Biology, Qt::Horizontal, tr("Biology"));
-	scoreModel->setHeaderData(Global::Score_Politics, Qt::Horizontal, tr("Politics"));
-	scoreModel->setHeaderData(Global::Score_History, Qt::Horizontal, tr("History"));
-	scoreModel->setHeaderData(Global::Score_Geography, Qt::Horizontal, tr("Geography"));
+	scoreModel->setHeaderData(Global::Score_Chinese, Qt::Horizontal, QObject::tr("Chinese"));
+	scoreModel->setHeaderData(Global::Score_Maths, Qt::Horizontal, QObject::tr("Maths"));
+	scoreModel->setHeaderData(Global::Score_ForeignLanguage, Qt::Horizontal, QObject::tr("Foreign Language"));
+	scoreModel->setHeaderData(Global::Score_Physics, Qt::Horizontal, QObject::tr("Physics"));
+	scoreModel->setHeaderData(Global::Score_Chemistry, Qt::Horizontal, QObject::tr("Chemistry"));
+	scoreModel->setHeaderData(Global::Score_Biology, Qt::Horizontal, QObject::tr("Biology"));
+	scoreModel->setHeaderData(Global::Score_Politics, Qt::Horizontal, QObject::tr("Politics"));
+	scoreModel->setHeaderData(Global::Score_History, Qt::Horizontal, QObject::tr("History"));
+	scoreModel->setHeaderData(Global::Score_Geography, Qt::Horizontal, QObject::tr("Geography"));
 	if(!scoreModel->select())
 	{
 		QMessageBox::critical(this,tr("Table Create Failed"),tr("select table score failed because:\n")+scoreModel->lastError().text());
@@ -410,20 +435,20 @@ void MainWindow::openTable()
 	QSqlRelationalTableModel* scoreModel = new QSqlRelationalTableModel;
 	scoreModel->setTable("score");
 	scoreModel->setRelation(Global::Score_StudentId, 
-			QSqlRelation("student","id","name"));
+			QSqlRelation("student","id","id"));
 	scoreModel->setRelation(Global::Score_ExamId,
-			QSqlRelation("exam","id","name"));
+			QSqlRelation("exam","id","id"));
 	scoreModel->setSort(Global::Score_ExamId, Qt::AscendingOrder);
 	scoreModel->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
-	scoreModel->setHeaderData(Global::Score_Chinese, Qt::Horizontal, tr("Chinese"));
-	scoreModel->setHeaderData(Global::Score_Maths, Qt::Horizontal, tr("Maths"));
-	scoreModel->setHeaderData(Global::Score_ForeignLanguage, Qt::Horizontal, tr("Foreign Language"));
-	scoreModel->setHeaderData(Global::Score_Physics, Qt::Horizontal, tr("Physics"));
-	scoreModel->setHeaderData(Global::Score_Chemistry, Qt::Horizontal, tr("Chemistry"));
-	scoreModel->setHeaderData(Global::Score_Biology, Qt::Horizontal, tr("Biology"));
-	scoreModel->setHeaderData(Global::Score_Politics, Qt::Horizontal, tr("Politics"));
-	scoreModel->setHeaderData(Global::Score_History, Qt::Horizontal, tr("History"));
-	scoreModel->setHeaderData(Global::Score_Geography, Qt::Horizontal, tr("Geography"));
+	scoreModel->setHeaderData(Global::Score_Chinese, Qt::Horizontal, QObject::tr("Chinese"));
+	scoreModel->setHeaderData(Global::Score_Maths, Qt::Horizontal, QObject::tr("Maths"));
+	scoreModel->setHeaderData(Global::Score_ForeignLanguage, Qt::Horizontal, QObject::tr("Foreign Language"));
+	scoreModel->setHeaderData(Global::Score_Physics, Qt::Horizontal, QObject::tr("Physics"));
+	scoreModel->setHeaderData(Global::Score_Chemistry, Qt::Horizontal, QObject::tr("Chemistry"));
+	scoreModel->setHeaderData(Global::Score_Biology, Qt::Horizontal, QObject::tr("Biology"));
+	scoreModel->setHeaderData(Global::Score_Politics, Qt::Horizontal, QObject::tr("Politics"));
+	scoreModel->setHeaderData(Global::Score_History, Qt::Horizontal, QObject::tr("History"));
+	scoreModel->setHeaderData(Global::Score_Geography, Qt::Horizontal, QObject::tr("Geography"));
 	if(!scoreModel->select())
 	{
 		QMessageBox::critical(this,tr("Table Open Failed"),tr("open table score failed because:\n")+scoreModel->lastError().text());
@@ -469,7 +494,7 @@ void MainWindow::updateRecentDBActions()
 	{
 		if (j < m_recentDBs.count())
 		{
-			QString text = tr("&%1 %2").arg(j+1).arg(strippedName(m_recentDBs[j]));
+			QString text = QString("&%1 %2").arg(j+1).arg(strippedName(m_recentDBs[j]));
 			recentDBActions[j]->setText(text);
 			recentDBActions[j]->setData(m_recentDBs[j]);
 			recentDBActions[j]->setVisible(true);
@@ -486,13 +511,141 @@ QString MainWindow::strippedName(const QString &fullFileName)
 	return QFileInfo(fullFileName).fileName();
 }
 
-QList<NodeData*> MainWindow::computeNodeList(int student_id, int start_exam, int end_exam, QList<int> majors)
+QList<NodeData*> MainWindow::computeNodeList(int student_id, int start_exam, int end_exam, QList<int> subjects)
 {
 	QList<NodeData*> node_list;
-	QSqlRelationalTableModel* score = m_scoreView->scoreListModel();
-	score->setFilter(QString("examid BETWEEN %1 AND %2").arg(start_exam).arg(end_exam));
-	//TODO
+
+	if(subjects.isEmpty())
+		return node_list;
+
+	QList<QList<QPair<int,int> > > rows_subjects_scores;
+	QList<QList<int> > all_exams_ranks;
+	QSqlRelationalTableModel* scoreModel = m_scoreView->scoreListModel();
+	scoreModel->setFilter(QString("examid BETWEEN %1 AND %2").arg(start_exam).arg(end_exam));
+	QSqlTableModel* examModel = m_scoreView->examListModel();
+
+	int row = 0;
+	int last_examid = scoreModel->data(scoreModel->index(row, Global::Score_ExamId)).toInt();
+	NodeData* node = new NodeData;
+	node->setExamName(examModel->data(examModel->index(last_examid-1,Global::Exam_Name)).toString());
+	node_list.append(node);
+
+	for(;row<scoreModel->rowCount();)
+	{
+		if(last_examid == scoreModel->data(scoreModel->index(row, Global::Score_ExamId)).toInt())
+		{
+			int studentId = scoreModel->data(scoreModel->index(row,Global::Score_StudentId)).toInt();
+			int subject, sumscore = 0;
+			QList<QPair<int,int> > row_subjects_scores;
+			foreach(subject,subjects)
+			{
+				int subject_score = scoreModel->data(scoreModel->index(row,subject)).toInt();
+				QPair<int,int> row_subject_score = qMakePair(studentId,subject_score);
+				row_subjects_scores.append(row_subject_score);
+				sumscore += subject_score;
+			}
+			QPair<int,int> one_sum_scores = qMakePair(studentId,sumscore);
+			row_subjects_scores.prepend(one_sum_scores);
+			rows_subjects_scores.append(row_subjects_scores);
+			row++;
+		}
+		else
+		{
+			QList<QPair<int,int> > subject_students_scores;
+			QList<int> single_exam_ranks;
+			for(int i=0; i<subjects.size()+1; ++i)
+			{
+				for(int j=0;j<rows_subjects_scores.size();++j)
+					subject_students_scores.append(rows_subjects_scores.at(j).at(i));
+				qStableSort(subject_students_scores.begin(),subject_students_scores.end(),greater);
+				single_exam_ranks.append(buildRank(student_id,subject_students_scores));
+				subject_students_scores.clear();
+			}
+			all_exams_ranks.append(single_exam_ranks);
+			rows_subjects_scores.clear();
+			last_examid = scoreModel->data(scoreModel->index(row,Global::Score_ExamId)).toInt();
+			node = new NodeData;
+			node->setExamName(examModel->data(examModel->index(last_examid-1,Global::Exam_Name)).toString());
+			node_list.append(node);
+		}
+	}
+	QList<QPair<int,int> > subject_students_scores;
+	QList<int> single_exam_ranks;
+	for(int i=0; i<subjects.size()+1; ++i)
+	{
+		for(int j=0;j<rows_subjects_scores.size();++j)
+			subject_students_scores.append(rows_subjects_scores.at(j).at(i));
+		qStableSort(subject_students_scores.begin(),subject_students_scores.end(),greater);
+		single_exam_ranks.append(buildRank(student_id,subject_students_scores));
+		subject_students_scores.clear();
+	}
+	all_exams_ranks.append(single_exam_ranks);
+	rows_subjects_scores.clear();
+	single_exam_ranks.clear();
+
+	single_exam_ranks = all_exams_ranks.first();
+	node_list.first()->setRank(single_exam_ranks.first());
+	QHash<QString,int> subject_trend;
+	for(int k = 1; k<single_exam_ranks.size(); ++k)
+	{
+		int trend = 0;
+		QString subject_name = m_subjectMap.value(subjects.at(k-1));
+		subject_trend.insert(subject_name,trend);
+	}
+	node_list.first()->setSubjectTrend(subject_trend);
+
+	for(int m=1; m<all_exams_ranks.size(); ++m)
+	{
+		single_exam_ranks.clear();
+		subject_trend.clear();
+		single_exam_ranks = all_exams_ranks.at(m);
+		node_list.at(m)->setRank(single_exam_ranks.first());
+		for(int k =1; k<single_exam_ranks.size(); ++k)
+		{
+			int trend = all_exams_ranks.at(m-1).at(k) - single_exam_ranks.at(k);
+			QString subject_name = m_subjectMap.value(subjects.at(k-1));
+			subject_trend.insert(subject_name,trend);
+		}
+		node_list.at(m)->setSubjectTrend(subject_trend);
+	}
 
 	m_scoreView->setCurrentStudent();
 	return node_list;
+}
+
+//QList<NodeData*> MainWindow::computeNodeList(int student_id, int start_exam, int end_exam, QList<int> subjects)
+//{
+	//QList<NodeData*> node_list;
+	////
+	//m_scoreView->setCurrentStudent();
+	//return node_list;
+//}
+bool MainWindow::greater(const QPair<int,int> rank_item1,const QPair<int,int> rank_item2)
+{
+	return (rank_item1.second > rank_item2.second);
+}
+
+int MainWindow::buildRank(int student_id, QList<QPair<int,int> > scores)
+{
+	int index=-1;
+	for(int i=0; i<scores.size(); ++i)
+		if(student_id == scores.at(i).first)
+			if(i > 0)
+			{
+				for(index=i-1; index>=0; --index)
+					if(scores.at(index).second!=scores.at(i).second)
+					{
+						index++;
+						break;
+					}
+				if(index < 0)
+					index++;
+				break;
+			}
+			else
+			{
+				index = i;
+				break;
+			}
+	return index+1;
 }

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QStringList>
+#include <QPair>
+#include <QHash>
 #include <QSqlRelationalTableModel>
 
 #include "global.h"
@@ -38,12 +40,16 @@ private slots:
 
 	void openRecentDB();
 
+
+	static bool greater(const QPair<int,int> rank_item1, const QPair<int,int> rank_item2);
+
 private:
 
 	ScoreView* m_scoreView;
 	QStringList m_recentDBs;
 	QString m_curDB;
 	QSqlDatabase m_DB;
+	QHash<int,QString> m_subjectMap;
 
 	QMenu *fileMenu;
 	QMenu *editMenu;
@@ -76,7 +82,8 @@ private:
 	void createTable();
 	void openTable();
 	void updateRecentDBActions();
-	QList<NodeData*> computeNodeList(int student_id, int start_exam, int end_exam, QList<int> majors);
+	QList<NodeData*> computeNodeList(int student_id, int start_exam, int end_exam, QList<int> subjects);
+	int buildRank(int student_id, QList<QPair<int,int> > scores);
 	QString strippedName(const QString &fullFileName);
 
 };

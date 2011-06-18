@@ -17,7 +17,7 @@ if(QT4_FOUND)
 	set(RANKVIEW_CAN_BE_COMPILED true)
 else(QT4_FOUND)
 	set(RANKVIEW_CAN_BE_COMPILED false)
-endif(QT$_FOUND)
+endif(QT4_FOUND)
 
 include(${QT_USE_FILE})
 

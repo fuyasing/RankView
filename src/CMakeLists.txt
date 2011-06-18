@@ -36,13 +36,20 @@ set (rankview_RCCS
 	rankImage.qrc
 	)
 
+set (rankview_TS_FILES
+	${CMAKE_SOURCE_DIR}/i18n/rankview_zh_CN.ts
+	)
+
 qt4_wrap_cpp(rankview_MOCS ${rankview_MOC_SRCS})
 qt4_add_resources(rankview_RCCS_SRCS ${rankview_RCCS})
-#add_definitions(-DQT_NO_DEBUG)
+qt4_create_translation(rankview_QMS ${rankview_SRCS} ${rankview_TS_FILES})
+
+add_definitions(-DQT_NO_DEBUG)
 
 add_executable (RankView
 	${rankview_SRCS}
 	${rankview_MOCS}
 	${rankview_RCCS_SRCS}
+	${rankview_QMS}
 	)
 target_link_libraries (RankView ${QT_LIBRARIES})

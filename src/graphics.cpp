@@ -54,7 +54,7 @@ void Graphics::drawBackground(QPainter *painter, const QRectF &rect)
 	// Text
 	QRectF textRect(sceneRect.left() + 100, sceneRect.top() + 4,
 			sceneRect.width() - 100, sceneRect.height() - 4);
-	QString message(tr("%1成绩排名变化趋势图").arg(m_stdName));
+	QString message(tr("%1\'s Score Rank Trend").arg(m_stdName));
 
 	QFont font = painter->font();
 	font.setBold(true);
@@ -87,7 +87,7 @@ void Graphics::drawGraphics()
 	this->setTransformationAnchor(AnchorUnderMouse);
 	this->scale(qreal(0.8), qreal(0.8));
 	this->setMinimumSize(900, 600);
-	this->setWindowTitle(tr("学生成绩排名趋势统计图"));
+	this->setWindowTitle(tr("Student's Score Rank Trend"));
 
 
 	double everyLength = (scene->width() - scene->width()/5 - scene->width()/20)/(m_nodeList.size() - 1);

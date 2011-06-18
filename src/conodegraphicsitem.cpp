@@ -71,7 +71,7 @@ void CoNodeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     font.setPointSize(14);
     painter->setFont(font);
     painter->setPen(Qt::black);
-    painter->drawText(rankRect, QString(tr("%1")).arg(m_tRank));
+    painter->drawText(rankRect, QString(QString("%1")).arg(m_tRank));
     painter->drawText(textRect, m_examName);
 
     QLineF line(boundingRect().width()/2, boundingRect().height()/2, boundingRect().width()/2, 550 - m_dataY);

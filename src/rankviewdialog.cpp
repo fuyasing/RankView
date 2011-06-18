@@ -7,11 +7,13 @@
 RankViewDialog::RankViewDialog(QString stdName, QList<NodeData*> nodeList,QWidget *parent) :
     QDialog(parent)
 {
-    this->setWindowTitle(tr("学生考试成绩趋势示意图"));
+    this->setWindowTitle(tr("Student's Score Rank Trend"));
     QVBoxLayout *viewLayout = new QVBoxLayout;
-    Graphics *rankView = new Graphics(stdName, nodeList);
-    viewLayout->addWidget(rankView);
-
+	if(!nodeList.isEmpty())
+	{
+		Graphics *rankView = new Graphics(stdName, nodeList);
+		viewLayout->addWidget(rankView);
+	}
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok, Qt::Horizontal);
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     viewLayout->addWidget(buttonBox);

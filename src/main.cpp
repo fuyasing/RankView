@@ -1,13 +1,26 @@
 #include <QtGui/QApplication>
-#include <QTextCodec>
+#include <QTranslator>
+#include <QLocale>
+#include <QLibraryInfo>
+
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-    MainWindow w;
-    w.show();
+	QApplication app(argc, argv);
 
-    return a.exec();
+	QTranslator qtTranslator;
+	qtTranslator.load("qt_" + QLocale::system().name(),
+			QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	app.installTranslator(&qtTranslator);
+
+	QTranslator appTranslator;
+	appTranslator.load("rankview_" + QLocale::system().name());
+	//appTranslator.load("rankview_" + QLocale::system().name(), QDir::currentPath()+"/i18n");
+	app.installTranslator(&appTranslator);
+
+	MainWindow w;
+	w.show();
+
+	return app.exec();
 }
