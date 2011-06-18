@@ -20,7 +20,7 @@
         <location filename="../src/mainwindow.cpp" line="46"/>
         <location filename="../src/mainwindow.cpp" line="339"/>
         <source>RankView</source>
-        <translation type="unfinished">看排名</translation>
+        <translation>看排名</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="56"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="79"/>
         <source>Cannot open selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>不能打开选择的文件</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="114"/>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="239"/>
         <source>&amp;Plot</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">绘制(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="242"/>
@@ -348,6 +348,7 @@
         <location filename="../src/mainwindow.cpp" line="27"/>
         <location filename="../src/mainwindow.cpp" line="394"/>
         <location filename="../src/mainwindow.cpp" line="445"/>
+        <location filename="../src/plotwizard.cpp" line="19"/>
         <source>Foreign Language</source>
         <translation>外语</translation>
     </message>

@@ -33,7 +33,7 @@ set (rankview_MOC_SRCS
 	)
 
 set (rankview_RCCS
-	rankImage.qrc
+	${CMAKE_SOURCE_DIR}/rankImage.qrc
 	)
 
 set (rankview_TS_FILES

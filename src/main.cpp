@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 
 	QTranslator appTranslator;
 	appTranslator.load("rankview_" + QLocale::system().name());
-	//appTranslator.load("rankview_" + QLocale::system().name(), QDir::currentPath()+"/i18n");
 	app.installTranslator(&appTranslator);
 
 	MainWindow w;
