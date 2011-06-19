@@ -44,12 +44,28 @@ qt4_wrap_cpp(rankview_MOCS ${rankview_MOC_SRCS})
 qt4_add_resources(rankview_RCCS_SRCS ${rankview_RCCS})
 qt4_create_translation(rankview_QMS ${rankview_SRCS} ${rankview_TS_FILES})
 
-add_definitions(-DQT_NO_DEBUG)
-
-add_executable (RankView
-	${rankview_SRCS}
-	${rankview_MOCS}
-	${rankview_RCCS_SRCS}
-	${rankview_QMS}
-	)
+if(APPLE)
+	add_executable (RankView
+		MACOSX_BUNDLE
+		${rankview_SRCS}
+		${rankview_MOCS}
+		${rankview_RCCS_SRCS}
+		${rankview_QMS}
+		)
+elseif(WIN32)
+	add_executable (RankView
+		WIN32
+		${rankview_SRCS}
+		${rankview_MOCS}
+		${rankview_RCCS_SRCS}
+		${rankview_QMS}
+		)
+else(APPLE)
+	add_executable (RankView
+		${rankview_SRCS}
+		${rankview_MOCS}
+		${rankview_RCCS_SRCS}
+		${rankview_QMS}
+		)
+endif(APPLE)
 target_link_libraries (RankView ${QT_LIBRARIES})

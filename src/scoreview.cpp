@@ -102,7 +102,7 @@ void ScoreView::createScoreListView(QSqlRelationalTableModel* score_list)
 	m_scoreListView->setColumnHidden(Global::Score_Id, true);
 	m_scoreListView->setColumnHidden(Global::Score_StudentId, true);
 	m_scoreListView->setColumnHidden(Global::Score_ExamId, true);
-	m_scoreListView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+	m_scoreListView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 	m_scoreListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_mainLayout->addWidget(m_scoreListView);
 }

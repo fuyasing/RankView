@@ -29,7 +29,7 @@ PlotWizard::PlotWizard(QSqlTableModel* student_list, QSqlTableModel* exam_list, 
 	checkMaths->setChecked(true);
 	checkForignLanguage->setChecked(true);
 
-	studentLabel = new QLabel(tr("Select S&tudent"));
+	studentLabel = new QLabel(tr("Select St&udent"));
 	studentCombo = new QComboBox;
 	startExamLabel = new QLabel(tr("S&tart Exam"));
 	startExamCombo = new QComboBox;

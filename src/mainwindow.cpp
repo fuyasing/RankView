@@ -239,7 +239,7 @@ void MainWindow::createActions()
 	plotAction = new QAction(tr("&Plot"),this);
 	plotAction->setIcon(QIcon(":images/plot.png"));
 	plotAction->setShortcut(QKeySequence::Print);
-	plotAction->setStatusTip(tr("Plot For Current Student"));
+	plotAction->setStatusTip(tr("Plot RankView Graph"));
 	plotAction->setEnabled(false);
 	connect(plotAction, SIGNAL(triggered()),this, SLOT(plotRank()));
 
@@ -250,7 +250,7 @@ void MainWindow::createActions()
 		connect(recentDBActions[i],SIGNAL(triggered()),this,SLOT(openRecentDB()));
 	}
 
-	quitAction = new QAction(tr("Q&uit"),this);
+	quitAction = new QAction(tr("&Quit"),this);
 	quitAction->setShortcut(QString("Ctrl+Q"));
 	quitAction->setStatusTip(tr("Quit The Application"));
 	connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -349,7 +349,9 @@ void MainWindow::createTable()
 	QSqlQuery stuq(query);
 	if(!stuq.isActive())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Create Failed"),tr("create table student failed because:\n")+stuq.lastError().text());
+#endif
 		return;
 	}
 	query = "CREATE TABLE exam ("
@@ -358,7 +360,9 @@ void MainWindow::createTable()
 	QSqlQuery exaq(query);
 	if(!exaq.isActive())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Create Failed"),tr("create table exam failed because:\n")+exaq.lastError().text());
+#endif
 		return;
 	}
 	query = "CREATE TABLE score ("
@@ -378,7 +382,9 @@ void MainWindow::createTable()
 	QSqlQuery scoq(query);
 	if(!scoq.isActive())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Create Failed"),tr("create table score failed because:\n")+scoq.lastError().text());
+#endif
 		return;
 	}
 	QSqlRelationalTableModel* scoreModel = new QSqlRelationalTableModel;
@@ -400,7 +406,9 @@ void MainWindow::createTable()
 	scoreModel->setHeaderData(Global::Score_Geography, Qt::Horizontal, QObject::tr("Geography"));
 	if(!scoreModel->select())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Create Failed"),tr("select table score failed because:\n")+scoreModel->lastError().text());
+#endif
 		return;
 	}
 
@@ -411,7 +419,9 @@ void MainWindow::createTable()
 	studentModel->setHeaderData(Global::Student_Name, Qt::Horizontal, tr("Name"));
 	if(!studentModel->select())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Create Failed"),tr("select table student failed because:\n")+studentModel->lastError().text());
+#endif
 		return;
 	}
 
@@ -421,7 +431,9 @@ void MainWindow::createTable()
 	examModel->setHeaderData(Global::Exam_Name, Qt::Horizontal, tr("Examination Name"));
 	if(!examModel->select())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Create Failed"),tr("select table exam failed because:\n")+examModel->lastError().text());
+#endif
 		return;
 	}
 
@@ -451,7 +463,9 @@ void MainWindow::openTable()
 	scoreModel->setHeaderData(Global::Score_Geography, Qt::Horizontal, QObject::tr("Geography"));
 	if(!scoreModel->select())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Open Failed"),tr("open table score failed because:\n")+scoreModel->lastError().text());
+#endif
 		return;
 	}
 
@@ -462,7 +476,9 @@ void MainWindow::openTable()
 	studentModel->setHeaderData(Global::Student_Name, Qt::Horizontal, tr("Name"));
 	if(!studentModel->select())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Open Failed"),tr("open table student failed because:\n")+studentModel->lastError().text());
+#endif
 		return;
 	}
 
@@ -472,7 +488,9 @@ void MainWindow::openTable()
 	examModel->setHeaderData(Global::Exam_Name, Qt::Horizontal, tr("Examination Name"));
 	if(!examModel->select())
 	{
+#ifdef CMAKE_C_FLAGS_DEBUG
 		QMessageBox::critical(this,tr("Table Open Failed"),tr("open table exam failed because:\n")+examModel->lastError().text());
+#endif
 		return;
 	}
 
@@ -612,14 +630,6 @@ QList<NodeData*> MainWindow::computeNodeList(int student_id, int start_exam, int
 	m_scoreView->setCurrentStudent();
 	return node_list;
 }
-
-//QList<NodeData*> MainWindow::computeNodeList(int student_id, int start_exam, int end_exam, QList<int> subjects)
-//{
-	//QList<NodeData*> node_list;
-	////
-	//m_scoreView->setCurrentStudent();
-	//return node_list;
-//}
 bool MainWindow::greater(const QPair<int,int> rank_item1,const QPair<int,int> rank_item2)
 {
 	return (rank_item1.second > rank_item2.second);
