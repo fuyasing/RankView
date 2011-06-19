@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QSqlRecord>
 #include <QHeaderView>
+#include <QSqlRelationalDelegate>
 
 ScoreView::ScoreView(QSqlTableModel* student_list, QSqlTableModel* exam_list, QSqlRelationalTableModel* score_list, QWidget* parent):QWidget(parent)
 {
@@ -104,6 +105,7 @@ void ScoreView::createScoreListView(QSqlRelationalTableModel* score_list)
 	m_scoreListView->setColumnHidden(Global::Score_ExamId, true);
 	m_scoreListView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 	m_scoreListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        m_scoreListView->setItemDelegate(new QSqlRelationalDelegate(m_scoreListView));
 	m_mainLayout->addWidget(m_scoreListView);
 }
 
