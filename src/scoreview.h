@@ -16,13 +16,13 @@ class ScoreView : public QWidget
 
 	public:
 
-		explicit ScoreView(QSqlTableModel* student_list, QSqlTableModel* score_list, QSqlRelationalTableModel* score_list, QWidget *parent = 0);
+		explicit ScoreView(QSqlTableModel* student_list, QSqlTableModel* exam_list, QSqlRelationalTableModel* score_list, QWidget *parent = 0);
 		~ScoreView();
 
 		QSqlTableModel* studentListModel() const;
 		void setStudentListModel(QSqlTableModel* student_list);
 		QSqlTableModel* examListModel() const;
-		void setExamListModel(QSqlTableModel* score_list);
+		void setExamListModel(QSqlTableModel* exam_list);
 		QSqlRelationalTableModel* scoreListModel() const;
 		void setScoreListModel(QSqlRelationalTableModel* score_list);
 		void setCurrentStudent(int row = 0);

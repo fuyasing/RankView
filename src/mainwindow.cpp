@@ -108,8 +108,21 @@ void MainWindow::importData()
 
 	QTextStream in(&dataFile);
 	QString record = in.readLine();
-	QStringList cols = record.split(";");
-	if(cols.size()!=11)
+	QStringList candidate_seps;
+	candidate_seps << ";" << "," << "\t" << " ";
+	QString real_sep;
+	bool is_legal = false;
+	QStringList cols;
+	foreach(real_sep, candidate_seps)
+	{
+		cols = record.split(real_sep);
+		if(cols.size() == 11)
+		{
+			is_legal = true;
+			break;
+		}
+	}
+	if(!is_legal)
 	{
 		QMessageBox::critical(this,tr("Import Data Failed"),tr("file format illegal"));
 		return;
@@ -117,7 +130,8 @@ void MainWindow::importData()
 	while(!in.atEnd())
 	{
 		record = in.readLine();
-		cols = record.split(";");
+		cols.clear();
+		cols = record.split(real_sep);
 		if(cols.size()!=11)
 			continue;
 		if(!studentMap.contains(cols[Global::Data_StudentNum]))
@@ -152,17 +166,23 @@ void MainWindow::importData()
 void MainWindow::applyChanges()
 {
 	QSqlTableModel* student = m_scoreView->studentListModel();
+	QSqlTableModel* exam = m_scoreView->examListModel();
 	QSqlRelationalTableModel* score = m_scoreView->scoreListModel();
 	student->submitAll();
+	exam->submitAll();
 	score->submitAll();
+	m_scoreView->setCurrentStudent();
 }
 
 void MainWindow::revertChanges()
 {
 	QSqlTableModel* student = m_scoreView->studentListModel();
+	QSqlTableModel* exam = m_scoreView->examListModel();
 	QSqlRelationalTableModel* score = m_scoreView->scoreListModel();
 	student->revertAll();
+	exam->revertAll();
 	score->revertAll();
+	m_scoreView->setCurrentStudent();
 }
 
 void MainWindow::plotRank()
