@@ -55,13 +55,17 @@ void MainWindow::newDB()
 {
 	QString dbName = QFileDialog::getSaveFileName(this,tr("Create New RankView Database"),".",tr("RankView DB (*.rkv)"));
 	if(!dbName.isEmpty())
+	{
+		if(!dbName.endsWith(".rkv"))
+			dbName.append(".rkv");
 		if(setCurrentDB(dbName))
 			createTable();
+	}
 }
 
 void MainWindow::openDB()
 {
-	QString dbName = QFileDialog::getOpenFileName(this,tr("Open An Exsisted RankView Database"),".",tr("RankView DB (*.rkv)"));
+	QString dbName = QFileDialog::getOpenFileName(this,tr("Open An Exsisted RankView Database"),".",tr("RankView DB (*.rkv);;All Files (*)"));
 	if(!dbName.isEmpty())
 		if(setCurrentDB(dbName))
 			openTable();
