@@ -210,10 +210,10 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="377"/>
         <location filename="../src/mainwindow.cpp" line="388"/>
-        <location filename="../src/mainwindow.cpp" line="410"/>
-        <location filename="../src/mainwindow.cpp" line="434"/>
-        <location filename="../src/mainwindow.cpp" line="447"/>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="411"/>
+        <location filename="../src/mainwindow.cpp" line="435"/>
+        <location filename="../src/mainwindow.cpp" line="448"/>
+        <location filename="../src/mainwindow.cpp" line="460"/>
         <source>Table Create Failed</source>
         <translation>数据表创建失败</translation>
     </message>
@@ -230,68 +230,68 @@
         <translation>创建exam表失败，原因:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="410"/>
+        <location filename="../src/mainwindow.cpp" line="411"/>
         <source>create table score failed because:
 </source>
         <translation>创建score表失败，原因:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="434"/>
+        <location filename="../src/mainwindow.cpp" line="435"/>
         <source>select table score failed because:
 </source>
         <translation>选择score表失败，原因:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="442"/>
-        <location filename="../src/mainwindow.cpp" line="499"/>
+        <location filename="../src/mainwindow.cpp" line="443"/>
+        <location filename="../src/mainwindow.cpp" line="500"/>
         <source>Student No.</source>
         <translation>学号.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="443"/>
-        <location filename="../src/mainwindow.cpp" line="500"/>
+        <location filename="../src/mainwindow.cpp" line="444"/>
+        <location filename="../src/mainwindow.cpp" line="501"/>
         <source>Name</source>
         <translation>姓名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="447"/>
+        <location filename="../src/mainwindow.cpp" line="448"/>
         <source>select table student failed because:
 </source>
         <translation>选择student表失败，原因:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="455"/>
-        <location filename="../src/mainwindow.cpp" line="512"/>
+        <location filename="../src/mainwindow.cpp" line="456"/>
+        <location filename="../src/mainwindow.cpp" line="513"/>
         <source>Examination Name</source>
         <translation>考试名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="460"/>
         <source>select table exam failed because:
 </source>
         <translation>选择exam表失败，原因:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="491"/>
-        <location filename="../src/mainwindow.cpp" line="504"/>
-        <location filename="../src/mainwindow.cpp" line="516"/>
+        <location filename="../src/mainwindow.cpp" line="492"/>
+        <location filename="../src/mainwindow.cpp" line="505"/>
+        <location filename="../src/mainwindow.cpp" line="517"/>
         <source>Table Open Failed</source>
         <translation>数据表打开失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="491"/>
+        <location filename="../src/mainwindow.cpp" line="492"/>
         <source>open table score failed because:
 </source>
         <translation>打开score表失败，原因:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="504"/>
+        <location filename="../src/mainwindow.cpp" line="505"/>
         <source>open table student failed because:
 </source>
         <translation>打开student表失败，原因:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="516"/>
+        <location filename="../src/mainwindow.cpp" line="517"/>
         <source>open table exam failed because:
 </source>
         <translation>打开exam表失败，原因:</translation>
@@ -334,72 +334,72 @@
     <name>QObject</name>
     <message>
         <location filename="../src/mainwindow.cpp" line="25"/>
-        <location filename="../src/mainwindow.cpp" line="422"/>
-        <location filename="../src/mainwindow.cpp" line="479"/>
+        <location filename="../src/mainwindow.cpp" line="423"/>
+        <location filename="../src/mainwindow.cpp" line="480"/>
         <location filename="../src/plotwizard.cpp" line="17"/>
         <source>Chinese</source>
         <translation>语文</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="26"/>
-        <location filename="../src/mainwindow.cpp" line="423"/>
-        <location filename="../src/mainwindow.cpp" line="480"/>
+        <location filename="../src/mainwindow.cpp" line="424"/>
+        <location filename="../src/mainwindow.cpp" line="481"/>
         <location filename="../src/plotwizard.cpp" line="18"/>
         <source>Maths</source>
         <translation>数学</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="27"/>
-        <location filename="../src/mainwindow.cpp" line="424"/>
-        <location filename="../src/mainwindow.cpp" line="481"/>
+        <location filename="../src/mainwindow.cpp" line="425"/>
+        <location filename="../src/mainwindow.cpp" line="482"/>
         <location filename="../src/plotwizard.cpp" line="19"/>
         <source>Foreign Language</source>
         <translation>外语</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="28"/>
-        <location filename="../src/mainwindow.cpp" line="425"/>
-        <location filename="../src/mainwindow.cpp" line="482"/>
+        <location filename="../src/mainwindow.cpp" line="426"/>
+        <location filename="../src/mainwindow.cpp" line="483"/>
         <location filename="../src/plotwizard.cpp" line="20"/>
         <source>Physics</source>
         <translation>物理</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="29"/>
-        <location filename="../src/mainwindow.cpp" line="426"/>
-        <location filename="../src/mainwindow.cpp" line="483"/>
+        <location filename="../src/mainwindow.cpp" line="427"/>
+        <location filename="../src/mainwindow.cpp" line="484"/>
         <location filename="../src/plotwizard.cpp" line="21"/>
         <source>Chemistry</source>
         <translation>化学</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="30"/>
-        <location filename="../src/mainwindow.cpp" line="427"/>
-        <location filename="../src/mainwindow.cpp" line="484"/>
+        <location filename="../src/mainwindow.cpp" line="428"/>
+        <location filename="../src/mainwindow.cpp" line="485"/>
         <location filename="../src/plotwizard.cpp" line="22"/>
         <source>Biology</source>
         <translation>生物</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="31"/>
-        <location filename="../src/mainwindow.cpp" line="428"/>
-        <location filename="../src/mainwindow.cpp" line="485"/>
+        <location filename="../src/mainwindow.cpp" line="429"/>
+        <location filename="../src/mainwindow.cpp" line="486"/>
         <location filename="../src/plotwizard.cpp" line="23"/>
         <source>Politics</source>
         <translation>政治</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="32"/>
-        <location filename="../src/mainwindow.cpp" line="429"/>
-        <location filename="../src/mainwindow.cpp" line="486"/>
+        <location filename="../src/mainwindow.cpp" line="430"/>
+        <location filename="../src/mainwindow.cpp" line="487"/>
         <location filename="../src/plotwizard.cpp" line="24"/>
         <source>History</source>
         <translation>历史</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="33"/>
-        <location filename="../src/mainwindow.cpp" line="430"/>
-        <location filename="../src/mainwindow.cpp" line="487"/>
+        <location filename="../src/mainwindow.cpp" line="431"/>
+        <location filename="../src/mainwindow.cpp" line="488"/>
         <location filename="../src/plotwizard.cpp" line="25"/>
         <source>Geography</source>
         <translation>地理</translation>

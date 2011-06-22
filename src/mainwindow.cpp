@@ -396,6 +396,7 @@ void MainWindow::createTable()
 		"chinese INTEGER NOT NULL,"
 		"maths INTEGER NOT NULL,"
 		"foreignlanguage INTEGER NOT NULL,"
+		"physics INTEGER NOT NULL,"
 		"chemistry INTEGER NOT NULL,"
 		"biology INTEGER NOT NULL,"
 		"politics INTEGER NOT NULL,"
