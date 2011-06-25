@@ -10,7 +10,7 @@
 #include <QToolBar>
 #include <QIcon>
 #include <QFileDialog>
-#include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QMessageBox>
 #include <QSqlRecord>
@@ -18,6 +18,8 @@
 #include <QSqlError>
 #include <QSettings>
 #include <QtAlgorithms>
+#include <QDir>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
@@ -53,7 +55,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::newDB()
 {
-	QString dbName = QFileDialog::getSaveFileName(this,tr("Create New RankView Database"),".",tr("RankView DB (*.rkv)"));
+	QString dbName = QFileDialog::getSaveFileName(this,tr("Create New RankView Database"),m_lastOpenPath,tr("RankView DB (*.rkv)"));
 	if(!dbName.isEmpty())
 	{
 		if(!dbName.endsWith(".rkv"))
@@ -65,7 +67,7 @@ void MainWindow::newDB()
 
 void MainWindow::openDB()
 {
-	QString dbName = QFileDialog::getOpenFileName(this,tr("Open An Exsisted RankView Database"),".",tr("RankView DB (*.rkv);;All Files (*)"));
+	QString dbName = QFileDialog::getOpenFileName(this,tr("Open An Exsisted RankView Database"),m_lastOpenPath,tr("RankView DB (*.rkv);;All Files (*)"));
 	if(!dbName.isEmpty())
 		if(setCurrentDB(dbName))
 			openTable();
@@ -74,7 +76,7 @@ void MainWindow::openDB()
 void MainWindow::importData()
 {
 	int exam_id;
-	QString dataFileName = QFileDialog::getOpenFileName(this,tr("Import Data From a CSV File"),".",tr("CSV File (*.csv)"));
+	QString dataFileName = QFileDialog::getOpenFileName(this,tr("Import Data From a CSV File"),QDir::homePath(),tr("CSV File (*.csv)"));
 	if(dataFileName.isEmpty())
 		return;
 	QFile dataFile(dataFileName);
@@ -334,6 +336,7 @@ void MainWindow::readSettings()
 	QSettings settings("Free Storm Org","RankView");
 
 	m_recentDBs = settings.value("recentDBs").toStringList();
+	m_lastOpenPath = settings.value("lastOpenPath").toString();
 }
 
 void MainWindow::writeSettings()
@@ -341,6 +344,7 @@ void MainWindow::writeSettings()
 	QSettings settings("Free Storm Org","RankView");
 
 	settings.setValue("recentDBs", m_recentDBs);
+	settings.setValue("lastOpenPath", m_lastOpenPath);
 }
 
 bool MainWindow::setCurrentDB(const QString &dbName)
@@ -352,6 +356,9 @@ bool MainWindow::setCurrentDB(const QString &dbName)
 		QMessageBox::critical(this,tr("Database Connect Failed"),m_DB.lastError().text());
 		return false;
 	}
+	QFileInfo dbFile(dbName);
+	m_lastOpenPath = dbFile.absolutePath();
+	
 	m_curDB = dbName;
 	m_recentDBs.removeAll(m_curDB);
 	m_recentDBs.prepend(m_curDB);
@@ -683,4 +690,10 @@ int MainWindow::buildRank(int student_id, QList<QPair<int,int> > scores)
 				break;
 			}
 	return index+1;
+}
+
+void MainWindow::closeEvent (QCloseEvent * event)
+{
+	writeSettings();
+	event->accept();
 }

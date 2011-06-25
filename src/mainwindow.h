@@ -12,6 +12,7 @@
 class QAction;
 class QMenu;
 class QToolBar;
+class QCloseEvent;
 
 class ScoreView;
 class NodeData;
@@ -25,6 +26,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+
+	void closeEvent (QCloseEvent * event);
+	
 private slots:
 
 	void newDB();
@@ -48,6 +53,7 @@ private:
 	ScoreView* m_scoreView;
 	QStringList m_recentDBs;
 	QString m_curDB;
+	QString m_lastOpenPath;
 	QSqlDatabase m_DB;
 	QHash<int,QString> m_subjectMap;
 
